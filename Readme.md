@@ -2,7 +2,7 @@
 
 > A context-driven, time-sensitive esoteric programming language
 
-Cs+++ is an experimental programming language where meaning is determined by context, structure, and execution timing rather than fixed syntax rules.
+Cs+++ is an experimental programming language in which meaning is determined by context, structure, and execution timing rather than by fixed syntax rules.
 
 ### Features
 
@@ -14,4 +14,18 @@ Cs+++ is an experimental programming language where meaning is determined by con
 > This language could have context loops where there is no limitations, so data leaks and infinite loops are prone.
 
 ### Why the name?
-The name references cesium, a highly reactive chemical element, while the suffix "+++" denotes that the language is intended to operate beyond conventional programming paradigms.
+The name references cesium, a highly reactive chemical element, reflecting the language’s unstable and context-sensitive behavior.
+The suffix “+++” signifies an escalation beyond traditional programming models, where symbols, structure, and execution timing all influence meaning.
+
+
+### Example code
+
+This example creates ten constant variables with unique names and integer values.
+
+```cs
+Var int("i")
+for i if(i<10){
+Const Var int("number_"+i) = i;
+i++;
+}
+```
