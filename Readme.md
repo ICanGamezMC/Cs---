@@ -12,3 +12,6 @@ Cs+++ is an experimental programming language where meaning is determined by con
 
 > [!WARNING]
 > This language could have context loops where there is no limitations, so data leaks and infinite loops are prone.
+
+### Why the name?
+The name references cesium, a highly reactive chemical element, while the suffix "+++" denotes that the language is intended to operate beyond conventional programming paradigms.
