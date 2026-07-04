@@ -23,9 +23,16 @@ The suffix “+++” signifies an escalation beyond traditional programming mode
 This example creates ten constant variables with unique names and integer values.
 
 ```cs
-Var int("i")
-for i if(i<10){
-Const Var int("number_"+i) = i;
-i++;
+fn main(){
+    Var int("i")
+    for i if(i<10){
+        Return Const Var int("number_"+i) = i;
+        i++;
+    }
 }
 ```
+
+### Read more
+Below are links to documentation covering execution structure, contextual behavior, temporal execution, and how to write Cs+++ code.  
+
+Structure of code
