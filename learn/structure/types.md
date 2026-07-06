@@ -15,7 +15,7 @@ fn main(){
 }
 ```
 
-Internally, every variable is represented as its own function that assigns binary data to a memory pointer. The binary representation itself can occupy any number of bytes.
+Internally, every variable is represented as its own function that assigns binary data to a memory pointer/address. The binary representation itself can occupy any number of bytes.
 
 Each default type can also be removed by using the `!!` keyword for any reason you want.
 ```cs
