@@ -8,21 +8,21 @@ including types for functions and other experimental constructs, enabling more e
 ___
 ## How variables are built
 
-Every variable built into the program is mutable by default, use `const` or `final` keywords to make them immutable. 
+Every variable in the language is mutable by default, use `const` or `final` keywords to make them immutable. 
 ```cs
 fn main(){
     const Var int("Constant") = 10;
 }
 ```
 
-Every variable also technically is its own function assigning binary to a pointer, with the binary itself being an assignable number of bytes.
+Internally, every variable is represented as its own function that assigns binary data to a memory pointer. The binary representation itself can occupy any number of bytes.
 
-Each default type can also be removed by using the `!//` keyword for any reason you want.
+Each default type can also be removed by using the `!!` keyword for any reason you want.
 ```cs
 fn main(){
     Var int("hello") = 10;
-    int!//;
-    print(hello)  # This will give an error
+    int!!;
+    print(hello)  # This will give an error because the type has been removed.
 }
 ```
 
