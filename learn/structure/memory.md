@@ -20,6 +20,7 @@ fn main(){
 }
 ```
 Timeline reads from left to right:
+```
                           ┌*ref────────┐      ┌──────────────┐
                      ┌────►Var A prints├──────►Var A is freed│
                      │    └────────────┘      └──────────────┘
@@ -32,7 +33,7 @@ Timeline reads from left to right:
 │ Var B created │     ├──►Var─B─is─freed│                     
 │ Hold int 20   ├─────┘  └──────────────┘                     
 └───────────────┘                                             
-
+```
 Any reference to multiple variables and creating/assigning it a new variable will be cloned creating a new memory address.
 
 > [!NOTE]
