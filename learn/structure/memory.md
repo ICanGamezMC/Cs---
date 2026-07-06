@@ -133,3 +133,28 @@ Each allocation is a node in the tree. Variables are references that point into 
 When an allocation has no remaining references (no variables pointing to it and no child references), 
 Deallocation occurs after the current statement has completed execution.
 
+
+```
+
+                             ┌─────────────────────┐                                                                                    
+                       ┌─────►Child Node           │                                                                                    
+                       │     │Reference Parent Root│                                                                                    
+                       │     └─────────────────────┘                                                                                    
+   ┌───────────────┐   │                                                                                                                
+   │Parent Root    ├───┤     ┌─────────────────────┐                                                                                    
+   │Contain Var int│   ├─────►Child Node           │                                                                                    
+   └───────┬───────┘   │     │Reference Parent Root│                                                                                    
+           │           │     └─────────────────────┘                                                                                    
+           │           │                                                                                                                
+           │           │     ┌─────────────────────┐                                                                                    
+           ▼           └─────►Child Node           ├──────────────┐                                                                     
+       Change in             │Reference Parent Root│              │                                                                     
+      data contained         └─────────────────────┘              │                                                                     
+      in parent root                                              ▼                                                                     
+           │                                                 Operation in           ┌───────────────────┐        ┌─────────────────────┐
+           │                                                  data using   ─────────►New Parent Root    ├────────►Child Node           │
+┌──────────▼────────┐        ┌─────────────────────┐        two child nodes         │    Contain Var int│        │Reference Parent Root│
+│New Parent Root    ├────────►Child Node           │              ▲                 └───────────────────┘        └─────────────────────┘
+│    Contain Var int│        │Reference Parent Root│              │                                                                     
+└───────────────────┘        └─────────────────────┴──────────────┘                                                                     
+```
