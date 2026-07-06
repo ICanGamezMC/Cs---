@@ -7,7 +7,7 @@ Cs+++ provides a unique approach to memory management.
 ## Memory tree model
 
 During compile time memory is represented as a tree structure, where if memory being allocated in a block of code is not returned then it will be freed unless stated otherwise.
-Also during changes to memory, or being set to another variable will always be cloned.
+Assigning one variable to another does not transfer ownership. Instead, a new allocation is created by cloning the original value.
 
 Here is a simple diagram of how memory is structured in Cs+++ with a tree model and code blocks:
 
@@ -21,11 +21,11 @@ fn main(){
 ```
 Timeline reads from left to right:
 ```
-                          ┌*ref────────┐      ┌──────────────┐
+                          ┌*reference──┐      ┌──────────────┐
                      ┌────►Var A prints├──────►Var A is freed│
                      │    └────────────┘      └──────────────┘
 ┌───────────────┐    │                                        
-│ Var A created ├────┴┐  ┌*cloned────────┐    ┌──────────────┐
+│ Var A created ├────┴┐  ┌*clone─────────┐    ┌──────────────┐
 │ Hold int 10   │     │  │ Var C created ├────►Var C is freed│
 └───────────────┘  Ref┼──► Hold int 30   │    └──────────────┘
                    A+B│  └───────────────┘                    
@@ -34,10 +34,10 @@ Timeline reads from left to right:
 │ Hold int 20   ├─────┘  └──────────────┘                     
 └───────────────┘                                             
 ```
-Any reference to multiple variables and creating/assigning it a new variable will be cloned creating a new memory address.
 
 > [!NOTE]
-> Freeing code will look for any outgoing references without any processes. This all being done at compile time, so there is no garbage collection.
+> During compilation, every allocation becomes a node in a memory tree. The compiler tracks how memory 
+> flows between variables and scopes. If an allocation has no outgoing references after a scope ends, it is automatically freed.
 
 Here is the same code but with where the memory is being freed:
 ```cs
