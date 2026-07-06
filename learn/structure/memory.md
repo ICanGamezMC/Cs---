@@ -7,7 +7,8 @@ Cs+++ provides a unique approach to memory management.
 ## Memory tree model
 
 During compile time memory is represented as a tree structure, where if memory being allocated in a block of code is not returned then it will be freed unless stated otherwise.
-Assigning one variable to another does not transfer ownership. Instead, a new allocation is created by cloning the original value.
+During compilation, every allocation becomes a node in a memory tree. Direct assignments create child references to an existing allocation, 
+while expressions that produce new values create new allocations.
 
 Here is a simple diagram of how memory is structured in Cs+++ with a tree model and code blocks:
 
@@ -96,9 +97,9 @@ fn main(){
 }
 ```
 
-### Dereferencing
-When you assign a variable but then change a child reference, that child reference will be dereferenced and a new allocation will be created. 
-This is to prevent accidental changes to the original value. This also makes the dereferenced child variable the new root of the allocation, 
+### Branching
+When you assign a variable but then change a child reference, that child reference will be branching and a new allocation will be created. 
+This is to prevent accidental changes to the original value. This also makes the branching child variable the new root of the allocation, 
 and any future child references will reference this new allocation.
 
 ```cs
@@ -111,7 +112,7 @@ fn main(){
     print(a);  # Outputs 10
 }
 ```
-Another interesting diagram (because we got to love those) is how this dereferencing works in memory:
+Another interesting diagram (because we got to love those) is how this branching works in memory:
 ```
 Referenced all to the same address:
       [10]
@@ -124,6 +125,11 @@ After c = 50:
      A    B          C
 ```
 
-## Why this model?
-This model helps blend the best of both not having to worry about ownerships like in rust, or having spikes in memory like in all the garbage collected languages.  
-It also stops you from forgetting to free memory, and allows you to have a more flexible approach to memory management.
+
+
+## Summary of tree model
+Cs+++ uses a memory tree model, where allocations form a tree of references created during compilation.
+Each allocation is a node in the tree. Variables are references that point into these nodes.
+When an allocation has no remaining references (no variables pointing to it and no child references), 
+Deallocation occurs after the current statement has completed execution.
+
