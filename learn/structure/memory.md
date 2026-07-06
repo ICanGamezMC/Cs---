@@ -51,3 +51,79 @@ fn main(){
     # A is freed here.
 }
 ```
+
+## Auto referencing
+When an assignment does not modify a value, Cs+++ automatically creates a reference to the existing allocation instead of cloning it. 
+If an expression produces a new value, a new allocation is created.
+Take this example of an automatic reference:
+```cs
+fn main(){
+    Var int("a") = 10;
+    Var int("b") = a;
+    print(b)  # Outputs 10
+}
+```
+Diagram of what's going on in memory:
+```
+┌──────────────┐     ┌*reference────┐   ┌*reference──┐   ┌──────────────┐
+│Var A created ├─┬───►Var B created ├───►Var B prints├───►Var A is freed│
+│Hold int 10   │ │   │Hold int 10   │   └────────────┘   └──────────────┘
+└──────────────┘ │   └──────────────┘                                    
+                 │   ┌──────────────┐                                    
+                 └───►Var A is freed│                                    
+                     └──────────────┘                                    
+```
+Here is the same code but with where the memory is being freed:
+```cs
+fn main(){
+    Var int("a") = 10;
+    Var int("b") = a;
+    # A is freed here.
+    print(b)  # Outputs 10
+    # B is freed here.
+}
+```
+
+> [!NOTE]
+> Variables assigned from a root variable become child references. Child references do not own memory; they reference the same allocation as the root.
+> Any modification made through the root or a child reference is visible to every variable referencing that allocation.
+```cs
+fn main(){
+    Var int("a") = 10;
+    Var int("b") = a;
+    a = 20;
+    print(b)  # Outputs 20
+}
+```
+
+### Dereferencing
+When you assign a variable but then change a child reference, that child reference will be dereferenced and a new allocation will be created. 
+This is to prevent accidental changes to the original value. This also makes the dereferenced child variable the new root of the allocation, 
+and any future child references will reference this new allocation.
+
+```cs
+fn main(){
+    Var int("a") = 10;
+    Var int("b") = a;
+    Var int("c") = b;
+
+    c = 50;
+    print(a);  # Outputs 10
+}
+```
+Another interesting diagram (because we got to love those) is how this dereferencing works in memory:
+```
+Referenced all to the same address:
+      [10]
+     / | \
+    A  B  C
+
+After c = 50:
+      [10]         [50]
+      /  \           |
+     A    B          C
+```
+
+## Why this model?
+This model helps blend the best of both not having to worry about ownerships like in rust, or having spikes in memory like in all the garbage collected languages.  
+It also stops you from forgetting to free memory, and allows you to have a more flexible approach to memory management.
