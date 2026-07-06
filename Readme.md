@@ -24,7 +24,7 @@ This example creates ten constant variables with unique names and integer values
 
 ```cs
 fn main(){
-    Var int("i")
+    Var int("i") = 0;
     for i if(i<10){
         Return Const Var int("number_"+i) = i;
         i++;
